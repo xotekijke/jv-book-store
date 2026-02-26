@@ -1,21 +1,21 @@
 package com.example.jvbookstore.repository;
 
-import java.util.List;
 import com.example.jvbookstore.model.Book;
+import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.stereotype.Repository;
-import java.util.Collections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
-    private final SessionFactory sessionFactory;
     private static final Logger logger = LoggerFactory.getLogger(BookRepositoryImpl.class);
+    private final SessionFactory sessionFactory;
 
     @Override
     public Book save(Book book) {
@@ -44,7 +44,6 @@ public class BookRepositoryImpl implements BookRepository {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM Book", Book.class).getResultList();
         } catch (org.hibernate.HibernateException ex) {
-            // логування помилки
             logger.error("Cannot fetch books from DB", ex);
             return Collections.emptyList();
         }

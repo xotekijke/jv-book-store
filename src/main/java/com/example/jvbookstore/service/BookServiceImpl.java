@@ -2,9 +2,9 @@ package com.example.jvbookstore.service;
 
 import com.example.jvbookstore.model.Book;
 import com.example.jvbookstore.repository.BookRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
