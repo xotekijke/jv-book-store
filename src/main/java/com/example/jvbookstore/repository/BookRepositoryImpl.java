@@ -1,9 +1,9 @@
 package com.example.jvbookstore.repository;
 
 import com.example.jvbookstore.model.Book;
-import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -43,10 +43,8 @@ public class BookRepositoryImpl implements BookRepository {
     public List<Book> findAll() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM Book", Book.class).getResultList();
-        } catch (org.hibernate.HibernateException ex) {
-            logger.error("Cannot fetch books from DB", ex);
-            return Collections.emptyList();
+        } catch (HibernateException ex) {
+            throw new RuntimeException("Failed to fetch books", ex);
         }
-
     }
 }
