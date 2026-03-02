@@ -1,5 +1,6 @@
 package com.example.jvbookstore.repository;
 
+import com.example.jvbookstore.exception.DataProcessingException;
 import com.example.jvbookstore.model.Book;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can't insert user into DB: " + book);
+            throw new DataProcessingException("Can't insert user into DB: " + book);
         } finally {
             if (session != null) {
                 session.close();
@@ -44,7 +45,7 @@ public class BookRepositoryImpl implements BookRepository {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM Book", Book.class).getResultList();
         } catch (HibernateException ex) {
-            throw new RuntimeException("Failed to fetch books", ex);
+            throw new DataProcessingException("Failed to fetch books", ex);
         }
     }
 }
