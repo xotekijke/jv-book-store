@@ -1,8 +1,7 @@
 package com.example.jvbookstore;
 
-import com.example.jvbookstore.model.Book;
+import com.example.jvbookstore.dto.CreateBookRequestDto;
 import com.example.jvbookstore.service.BookService;
-import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,12 +20,9 @@ public class JvBookStoreApplication {
     @Bean
     public CommandLineRunner commandLineRunner() {
         return args -> {
-            Book schoolbook = new Book();
+            CreateBookRequestDto schoolbook = new CreateBookRequestDto();
             schoolbook.setTitle("Math");
             schoolbook.setAuthor("Professor");
-            schoolbook.setPrice(BigDecimal.valueOf(200));
-            schoolbook.setDescription("9th grade");
-            schoolbook.setIsbn("978-3-16-148410-0");
 
             bookService.save(schoolbook);
 

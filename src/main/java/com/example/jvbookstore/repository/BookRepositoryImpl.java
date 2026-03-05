@@ -2,6 +2,8 @@ package com.example.jvbookstore.repository;
 
 import com.example.jvbookstore.exception.DataProcessingException;
 import com.example.jvbookstore.model.Book;
+import jakarta.persistence.EntityManager;
+import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.HibernateException;
@@ -10,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Repository;
 public class BookRepositoryImpl implements BookRepository {
     private static final Logger logger = LoggerFactory.getLogger(BookRepositoryImpl.class);
     private final SessionFactory sessionFactory;
+    private final LocalContainerEntityManagerFactoryBean entityManagerFactory2;
 
     @Override
     public Book save(Book book) {
@@ -41,6 +45,15 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
+    public Book getBookById(Long id) {
+        try (EntityManager entityManager = entityManagerFactory2
+                .createNativeEntityManager(Collections.emptyMap())) {
+            Book book = entityManager.find(Book.class, id);
+            return book != null ? book : new Book();
+        }
+    }
+
+    @Override
     public List<Book> findAll() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM Book", Book.class).getResultList();
@@ -48,4 +61,18 @@ public class BookRepositoryImpl implements BookRepository {
             throw new DataProcessingException("Failed to fetch books", ex);
         }
     }
+
+    @Override
+    public List<Book> findAllByTitle(String title) {
+        String lowerCaseTitle = title.toLowerCase();
+        try (EntityManager entityManager = entityManagerFactory2
+                .createNativeEntityManager(Collections.emptyMap())) {
+            return entityManager
+                    .createQuery("SELECT e FROM Book e WHERE lower(e.title) LIKE : name",
+                            Book.class)
+                    .setParameter("name", "%" + lowerCaseTitle + "%")
+                    .getResultList();
+        }
+    }
+
 }
