@@ -1,6 +1,7 @@
 package com.example.jvbookstore.repository;
 
 import com.example.jvbookstore.exception.DataProcessingException;
+import com.example.jvbookstore.exception.EntityNotFoundException;
 import com.example.jvbookstore.model.Book;
 import jakarta.persistence.EntityManager;
 import java.util.Collections;
@@ -49,7 +50,10 @@ public class BookRepositoryImpl implements BookRepository {
         try (EntityManager entityManager = entityManagerFactory2
                 .createNativeEntityManager(Collections.emptyMap())) {
             Book book = entityManager.find(Book.class, id);
-            return book != null ? book : new Book();
+            if (book == null) {
+                throw new EntityNotFoundException("Book not found with id: " + id);
+            }
+            return book;
         }
     }
 
