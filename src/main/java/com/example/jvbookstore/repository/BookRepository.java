@@ -10,5 +10,4 @@ public interface BookRepository {
 
     List<Book> findAll();
 
-    List<Book> findAllByTitle(String title);
 }

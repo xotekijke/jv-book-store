@@ -11,15 +11,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
-    private static final Logger logger = LoggerFactory.getLogger(BookRepositoryImpl.class);
     private final SessionFactory sessionFactory;
     private final LocalContainerEntityManagerFactoryBean entityManagerFactory2;
 

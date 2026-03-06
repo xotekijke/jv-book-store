@@ -10,6 +10,4 @@ public interface BookService {
     List<BookDto> findAll();
 
     BookDto getBookById(Long id);
-
-    List<BookDto> getAllByTitle(String title);
 }
