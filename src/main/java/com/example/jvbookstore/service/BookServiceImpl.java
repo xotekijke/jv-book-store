@@ -2,11 +2,11 @@ package com.example.jvbookstore.service;
 
 import com.example.jvbookstore.dto.BookDto;
 import com.example.jvbookstore.dto.CreateBookRequestDto;
+import com.example.jvbookstore.exception.EntityNotFoundException;
 import com.example.jvbookstore.mapper.BookMapper;
 import com.example.jvbookstore.model.Book;
 import com.example.jvbookstore.repository.BookRepository;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +33,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getBookById(Long id) {
-        return null;
+        return bookRepository.getBookById(id)
+                .map(bookMapper::toBookDto)
+                .orElseThrow(() -> new EntityNotFoundException("Book not found with id " + id));
     }
 }
