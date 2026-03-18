@@ -3,20 +3,20 @@ package com.example.jvbookstore.repository;
 import com.example.jvbookstore.exception.DataProcessingException;
 import com.example.jvbookstore.model.Book;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
-    private static final Logger logger = LoggerFactory.getLogger(BookRepositoryImpl.class);
     private final SessionFactory sessionFactory;
+    private final LocalContainerEntityManagerFactoryBean entityManagerFactory2;
 
     @Override
     public Book save(Book book) {
@@ -41,6 +41,15 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
+    public Optional<Book> getBookById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(session.find(Book.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find book by id: " + id, e);
+        }
+    }
+
+    @Override
     public List<Book> findAll() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM Book", Book.class).getResultList();
@@ -48,4 +57,5 @@ public class BookRepositoryImpl implements BookRepository {
             throw new DataProcessingException("Failed to fetch books", ex);
         }
     }
+
 }
