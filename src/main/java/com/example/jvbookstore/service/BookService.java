@@ -3,7 +3,6 @@ package com.example.jvbookstore.service;
 import com.example.jvbookstore.dto.BookDto;
 import com.example.jvbookstore.dto.CreateBookRequestDto;
 import com.example.jvbookstore.dto.UpdateBookRequestDto;
-import jakarta.validation.Valid;
 import java.util.List;
 
 public interface BookService {
@@ -13,7 +12,7 @@ public interface BookService {
 
     BookDto getBookById(Long id);
 
-    BookDto update(Long id, @Valid UpdateBookRequestDto requestDto);
+    BookDto update(Long id, UpdateBookRequestDto requestDto);
 
     void deleteBook(Long id);
 }

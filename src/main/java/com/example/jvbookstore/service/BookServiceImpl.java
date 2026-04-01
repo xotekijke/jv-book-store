@@ -53,8 +53,8 @@ public class BookServiceImpl implements BookService {
         book.setPrice(BigDecimal.valueOf(requestDto.getPrice()));
         book.setDescription(requestDto.getDescription());
 
-        Book updatedBook = bookRepository.save(book);
-        return bookMapper.toDto(updatedBook);
+        bookRepository.save(book);
+        return bookMapper.toDto(book);
     }
 
     @Override
