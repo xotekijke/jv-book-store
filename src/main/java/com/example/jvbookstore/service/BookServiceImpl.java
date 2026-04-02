@@ -6,6 +6,7 @@ import com.example.jvbookstore.exception.EntityNotFoundException;
 import com.example.jvbookstore.mapper.BookMapper;
 import com.example.jvbookstore.model.Book;
 import com.example.jvbookstore.repository.BookRepository;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,17 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(id)
                 .map(bookMapper::toBookDto)
                 .orElseThrow(() -> new EntityNotFoundException("Book not found with id " + id));
+    }
+
+    @Override
+    @Transactional
+    public BookDto update(Long id, CreateBookRequestDto requestDto) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
+
+        bookMapper.updateBookFromDto(requestDto, book);
+
+        return bookMapper.toBookDto(bookRepository.save(book));
     }
 
     @Override
