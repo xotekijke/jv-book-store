@@ -2,7 +2,6 @@ package com.example.jvbookstore.controller;
 
 import com.example.jvbookstore.dto.BookDto;
 import com.example.jvbookstore.dto.CreateBookRequestDto;
-import com.example.jvbookstore.dto.UpdateBookRequestDto;
 import com.example.jvbookstore.service.BookService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -41,7 +40,7 @@ public class BookController {
 
     @PutMapping("/{id}")
     public BookDto updateBook(@PathVariable Long id,
-                              @Valid @RequestBody UpdateBookRequestDto requestDto) {
+                              @Valid @RequestBody CreateBookRequestDto requestDto) {
         return bookService.update(id, requestDto);
     }
 }
