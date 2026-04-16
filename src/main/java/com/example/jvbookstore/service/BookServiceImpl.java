@@ -7,8 +7,9 @@ import com.example.jvbookstore.mapper.BookMapper;
 import com.example.jvbookstore.model.Book;
 import com.example.jvbookstore.repository.BookRepository;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,12 +25,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> findAll() {
+    public Page<BookDto> findAll(Pageable pageable) {
         return bookRepository
-                .findAll()
-                .stream()
-                .map(bookMapper::toBookDto)
-                .toList();
+                .findAll(pageable)
+                .map(bookMapper::toBookDto);
     }
 
     @Override
