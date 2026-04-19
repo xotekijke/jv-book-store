@@ -1,8 +1,8 @@
 package com.example.jvbookstore.mapper;
 
 import com.example.jvbookstore.config.MapperConfig;
-import com.example.jvbookstore.dto.BookDto;
-import com.example.jvbookstore.dto.CreateBookRequestDto;
+import com.example.jvbookstore.dto.book.BookDto;
+import com.example.jvbookstore.dto.book.CreateBookRequestDto;
 import com.example.jvbookstore.model.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

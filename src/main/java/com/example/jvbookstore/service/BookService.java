@@ -1,7 +1,7 @@
 package com.example.jvbookstore.service;
 
-import com.example.jvbookstore.dto.BookDto;
-import com.example.jvbookstore.dto.CreateBookRequestDto;
+import com.example.jvbookstore.dto.book.BookDto;
+import com.example.jvbookstore.dto.book.CreateBookRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
