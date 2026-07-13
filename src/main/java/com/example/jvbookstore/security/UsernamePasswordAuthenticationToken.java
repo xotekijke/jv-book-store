@@ -16,6 +16,6 @@ public class UsernamePasswordAuthenticationToken implements Authentication {
 
     @Override
     public Object getPrincipal() {
-        return password ;
+        return password;
     }
 }

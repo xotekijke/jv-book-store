@@ -8,7 +8,6 @@ import com.example.jvbookstore.model.User;
 import com.example.jvbookstore.repository.UserRepository;
 import com.example.jvbookstore.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service

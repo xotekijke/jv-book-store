@@ -6,11 +6,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Base64;
 import lombok.RequiredArgsConstructor;
 import org.h2.util.StringUtils;
 import org.springframework.stereotype.Component;
-import java.io.IOException;
-import java.util.Base64;
 
 @Component
 @RequiredArgsConstructor
@@ -42,10 +42,11 @@ public class BasicAuthenticationFilter extends HttpFilter {
         SecurityContextHolder.getSecurityContext().setAuthentication(authentication);
         chain.doFilter(request, response);
     }
+
     private Authentication getAuthentication(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
 
-        if(header == null) {
+        if (header == null) {
             return null;
         }
 

@@ -3,9 +3,9 @@ package com.example.jvbookstore.security;
 import com.example.jvbookstore.dto.user.UserLoginRequestDto;
 import com.example.jvbookstore.model.User;
 import com.example.jvbookstore.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
