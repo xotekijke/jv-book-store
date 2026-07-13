@@ -3,38 +3,32 @@ package com.example.jvbookstore.mapper;
 import com.example.jvbookstore.dto.user.UserRegistrationRequestDto;
 import com.example.jvbookstore.dto.user.UserResponseDto;
 import com.example.jvbookstore.model.User;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
-@Component
+@Mapper(
+        componentModel = "spring",
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+)
+
 public class UserMapper {
-    
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "isActive", ignore = true)
+    @Mapping(target = "phoneNumber", ignore = true)
+    @Mapping(target = "roles", ignore = true)
     public User toEntity(UserRegistrationRequestDto requestDto) {
-        if (requestDto == null) {
-            return null;
-        }
-        
-        User user = new User();
-        user.setEmail(requestDto.getEmail());
-        user.setPassword(requestDto.getPassword());
-        user.setFirstName(requestDto.getFirstName());
-        user.setLastName(requestDto.getLastName());
-        user.setShippingAddress(requestDto.getShippingAddress());
-        
-        return user;
+        return null;
     }
-    
+
     public UserResponseDto toDto(User user) {
-        if (user == null) {
-            return null;
-        }
-        
-        UserResponseDto responseDto = new UserResponseDto();
-        responseDto.setId(user.getId());
-        responseDto.setEmail(user.getEmail());
-        responseDto.setFirstName(user.getFirstName());
-        responseDto.setLastName(user.getLastName());
-        responseDto.setShippingAddress(user.getShippingAddress());
-        
-        return responseDto;
+        return null;
     }
 }
+
+

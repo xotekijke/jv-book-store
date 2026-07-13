@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findAllByTitleContainingIgnoreCase(String title);
+
+    List<Book> findAllByUserId(Long userId);
 }

@@ -10,6 +10,8 @@ public interface BookService {
 
     Page<BookDto> findAll(Pageable pageable);
 
+    Page<BookDto> findAll(String email, Pageable pageable);
+
     BookDto getBookById(Long id);
 
     BookDto update(Long id, CreateBookRequestDto requestDto);

@@ -12,11 +12,9 @@ public class UserRegistrationRequestDto {
 
     @NotBlank
     @Email
-    @Size
     private String email;
 
     @NotBlank
-    @Size
     private String password;
 
     @NotBlank

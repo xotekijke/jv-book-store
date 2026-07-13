@@ -25,14 +25,14 @@ public class UserServiceImpl implements UserService {
             throw new RegistrationException("User with email " + request.getEmail()
                     + " already exists");
         }
+        User user = userMapper.toEntity(request);
+        userRepository.save(user);
+        return userMapper.toDto(user);
+    }
 
-        try {
-            User user = userMapper.toEntity(request);
-
-            User savedUser = userRepository.save(user);
-            return userMapper.toDto(savedUser);
-        } catch (DataIntegrityViolationException e) {
-            throw new RegistrationException("Could not register user: " + e.getMessage(), e);
-        }
+    @Override
+    public UserResponseDto getByEmail(String email) {
+        return userRepository.findByEmail(email).map(userMapper::toDto)
+                .orElseThrow(() -> new RuntimeException("Cannot find user with email " + email));
     }
 }
