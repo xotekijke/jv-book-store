@@ -2,14 +2,12 @@ package com.example.jvbookstore.controller;
 
 import com.example.jvbookstore.dto.book.BookDto;
 import com.example.jvbookstore.dto.book.CreateBookRequestDto;
-import com.example.jvbookstore.security.Authentication;
-import com.example.jvbookstore.security.SecurityContextHolder;
 import com.example.jvbookstore.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,11 +28,8 @@ public class BookController {
 
     @GetMapping
     @Operation(summary = "Get all books", description = "Get all books")
-    public Page<BookDto> getAllBooks(Pageable pageable) {
-        Authentication authentication = SecurityContextHolder
-                .getSecurityContext().getAuthentication();
-        String email = (String) authentication.getPrincipal();
-        return bookService.findAll(email, pageable);
+    public List<BookDto> getAllBooks(Pageable pageable) {
+        return bookService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
