@@ -3,7 +3,6 @@ package com.example.jvbookstore.controller;
 import com.example.jvbookstore.dto.user.UserRegistrationRequestDto;
 import com.example.jvbookstore.dto.user.UserResponseDto;
 import com.example.jvbookstore.exception.RegistrationException;
-import com.example.jvbookstore.security.AuthenticationService;
 import com.example.jvbookstore.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Authentication", description = "Endpoints for user registration and authentication")
 public class AuthController {
     private final UserService userService;
-    private final AuthenticationService authenticationService;
 
     @PostMapping("/registration")
     @Operation(
