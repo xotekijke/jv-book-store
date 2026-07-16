@@ -1,7 +1,7 @@
 package com.example.jvbookstore.controller;
 
-import com.example.jvbookstore.dto.BookDto;
-import com.example.jvbookstore.dto.CreateBookRequestDto;
+import com.example.jvbookstore.dto.book.BookDto;
+import com.example.jvbookstore.dto.book.CreateBookRequestDto;
 import com.example.jvbookstore.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

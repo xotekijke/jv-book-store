@@ -8,6 +8,6 @@ public class JvBookStoreApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(JvBookStoreApplication.class, args);
-    }
 
+    }
 }

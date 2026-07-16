@@ -1,11 +1,12 @@
-package com.example.jvbookstore.service;
+package com.example.jvbookstore.service.impl;
 
-import com.example.jvbookstore.dto.BookDto;
-import com.example.jvbookstore.dto.CreateBookRequestDto;
+import com.example.jvbookstore.dto.book.BookDto;
+import com.example.jvbookstore.dto.book.CreateBookRequestDto;
 import com.example.jvbookstore.exception.EntityNotFoundException;
 import com.example.jvbookstore.mapper.BookMapper;
 import com.example.jvbookstore.model.Book;
 import com.example.jvbookstore.repository.BookRepository;
+import com.example.jvbookstore.service.BookService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
