@@ -12,12 +12,9 @@ import org.mapstruct.ReportingPolicy;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
-
 public interface UserMapper {
 
     User toUser(UserRegistrationRequestDto user);
 
     UserResponseDto toDto(User user);
 }
-
-
