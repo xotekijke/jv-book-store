@@ -1,8 +1,11 @@
 package com.example.jvbookstore.controller;
 
+import com.example.jvbookstore.dto.user.UserLoginRequestDto;
+import com.example.jvbookstore.dto.user.UserLoginResponseDto;
 import com.example.jvbookstore.dto.user.UserRegistrationRequestDto;
 import com.example.jvbookstore.dto.user.UserResponseDto;
 import com.example.jvbookstore.exception.RegistrationException;
+import com.example.jvbookstore.security.AuthenticationService;
 import com.example.jvbookstore.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,8 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @Tag(name = "Authentication", description = "Endpoints for user registration and authentication")
-public class AuthController {
+public class AuthenticationController {
     private final UserService userService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/registration")
     @Operation(
@@ -37,5 +41,22 @@ public class AuthController {
     public UserResponseDto registerUser(@RequestBody @Valid UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         return userService.register(requestDto);
+    }
+
+    @PostMapping("/login")
+    @Operation(
+            summary = "User login",
+            description = "Authenticates a user by email and password and returns a JWT token."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User successfully authenticated"),
+            @ApiResponse(responseCode = "400",
+                    description = "Invalid request body / validation failed"),
+            @ApiResponse(responseCode = "401", description = "Invalid email or password")
+    })
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto request) {
+        String token = authenticationService.authenticate(
+                request.getEmail(), request.getPassword());
+        return new UserLoginResponseDto(token);
     }
 }

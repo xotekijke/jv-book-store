@@ -52,4 +52,15 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         }
         return e.getDefaultMessage();
     }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Object> handleBadCredentialsException(
+            BadCredentialsException ex, WebRequest request) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
+    }
 }
