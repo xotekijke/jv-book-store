@@ -23,7 +23,6 @@ public interface BookMapper {
     @Mapping(target = "userId", ignore = true)
     @Mapping(target = "categories", ignore = true)
     @Mapping(target = "deleted", ignore = true)
-    @Mapping(target = "deletedAt", ignore = true)
     Book toEntity(CreateBookRequestDto bookDto);
 
     BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);
@@ -32,7 +31,6 @@ public interface BookMapper {
     @Mapping(target = "userId", ignore = true)
     @Mapping(target = "categories", ignore = true)
     @Mapping(target = "deleted", ignore = true)
-    @Mapping(target = "deletedAt", ignore = true)
     void updateBookFromDto(CreateBookRequestDto requestDto, @MappingTarget Book book);
 
     @AfterMapping

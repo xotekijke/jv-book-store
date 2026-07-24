@@ -31,15 +31,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto save(CategoryDto categoryDto) {
         Category category = categoryMapper.toEntity(categoryDto);
-        category.setId(null);
         return categoryMapper.toDto(categoryRepository.save(category));
     }
 
     @Override
     public CategoryDto update(Long id, CategoryDto categoryDto) {
         Category category = getCategoryOrThrow(id);
-        category.setName(categoryDto.getName());
-        category.setDescription(categoryDto.getDescription());
+        categoryMapper.updateCategoryFromDto(categoryDto, category);
         return categoryMapper.toDto(categoryRepository.save(category));
     }
 

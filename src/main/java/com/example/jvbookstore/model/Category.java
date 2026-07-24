@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -30,11 +29,4 @@ public class Category {
 
     @Column(nullable = false)
     private boolean isDeleted = false;
-
-    private LocalDateTime deletedAt;
-
-    public void softDelete() {
-        this.isDeleted = true;
-        this.deletedAt = LocalDateTime.now();
-    }
 }

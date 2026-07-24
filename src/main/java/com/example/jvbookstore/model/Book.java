@@ -10,7 +10,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
@@ -46,11 +45,4 @@ public class Book {
 
     @Column(nullable = false)
     private boolean isDeleted = false;
-
-    private LocalDateTime deletedAt;
-
-    public void softDelete() {
-        this.isDeleted = true;
-        this.deletedAt = LocalDateTime.now();
-    }
 }
