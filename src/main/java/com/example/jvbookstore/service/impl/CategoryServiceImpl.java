@@ -1,6 +1,7 @@
 package com.example.jvbookstore.service.impl;
 
 import com.example.jvbookstore.dto.category.CategoryDto;
+import com.example.jvbookstore.dto.category.CreateCategoryDto;
 import com.example.jvbookstore.exception.EntityNotFoundException;
 import com.example.jvbookstore.mapper.CategoryMapper;
 import com.example.jvbookstore.model.Category;
@@ -29,13 +30,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto save(CategoryDto categoryDto) {
+    public CategoryDto save(CreateCategoryDto categoryDto) {
         Category category = categoryMapper.toEntity(categoryDto);
         return categoryMapper.toDto(categoryRepository.save(category));
     }
 
     @Override
-    public CategoryDto update(Long id, CategoryDto categoryDto) {
+    public CategoryDto update(Long id, CreateCategoryDto categoryDto) {
         Category category = getCategoryOrThrow(id);
         categoryMapper.updateCategoryFromDto(categoryDto, category);
         return categoryMapper.toDto(categoryRepository.save(category));

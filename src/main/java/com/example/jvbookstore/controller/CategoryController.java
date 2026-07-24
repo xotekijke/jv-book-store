@@ -2,6 +2,7 @@ package com.example.jvbookstore.controller;
 
 import com.example.jvbookstore.dto.book.BookDtoWithoutCategoryIds;
 import com.example.jvbookstore.dto.category.CategoryDto;
+import com.example.jvbookstore.dto.category.CreateCategoryDto;
 import com.example.jvbookstore.service.BookService;
 import com.example.jvbookstore.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +37,7 @@ public class CategoryController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Create a new category", description = "Create a new category")
-    public CategoryDto createCategory(@RequestBody @Valid CategoryDto categoryDto) {
+    public CategoryDto createCategory(@RequestBody @Valid CreateCategoryDto categoryDto) {
         return categoryService.save(categoryDto);
     }
 
@@ -59,7 +60,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update category", description = "Update a specific category")
     public CategoryDto updateCategory(@PathVariable Long id,
-                                       @RequestBody @Valid CategoryDto categoryDto) {
+                                      @RequestBody @Valid CreateCategoryDto categoryDto) {
         return categoryService.update(id, categoryDto);
     }
 
