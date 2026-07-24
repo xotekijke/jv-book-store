@@ -12,6 +12,7 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
@@ -32,6 +33,16 @@ public interface BookMapper {
     @Mapping(target = "categories", ignore = true)
     @Mapping(target = "deleted", ignore = true)
     void updateBookFromDto(CreateBookRequestDto requestDto, @MappingTarget Book book);
+
+    @Named("bookFromId")
+    default Book bookFromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Book book = new Book();
+        book.setId(id);
+        return book;
+    }
 
     @AfterMapping
     default void setCategoryIds(@MappingTarget BookDto bookDto, Book book) {
