@@ -27,7 +27,7 @@ public class ShoppingCart {
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    @JoinColumn(name = "id", nullable = false, unique = true)
     private User user;
 
     @OneToMany(mappedBy = "shoppingCart", cascade = jakarta.persistence.CascadeType.ALL,
