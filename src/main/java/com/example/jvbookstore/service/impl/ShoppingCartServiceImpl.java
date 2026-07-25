@@ -29,13 +29,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCartDto getByUser(User user) {
-        return shoppingCartMapper.toDto(getOrCreateCart(user));
+        return shoppingCartMapper.toDto(getCartOrThrow(user));
     }
 
     @Override
     @Transactional
     public ShoppingCartDto addBook(User user, CreateCartItemRequestDto requestDto) {
-        ShoppingCart cart = getOrCreateCart(user);
+        ShoppingCart cart = getCartOrThrow(user);
 
         Book book = bookRepository.findById(requestDto.getBookId())
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -61,8 +61,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     @Transactional
     public ShoppingCartDto updateItemQuantity(User user, Long cartItemId,
-                                               UpdateCartItemRequestDto requestDto) {
-        ShoppingCart cart = getOrCreateCart(user);
+                                              UpdateCartItemRequestDto requestDto) {
+        ShoppingCart cart = getCartOrThrow(user);
         CartItem cartItem = cartItemRepository
                 .findByIdAndShoppingCartId(cartItemId, cart.getId())
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -78,7 +78,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     @Transactional
     public void removeItem(User user, Long cartItemId) {
-        ShoppingCart cart = getOrCreateCart(user);
+        ShoppingCart cart = getCartOrThrow(user);
         CartItem cartItem = cartItemRepository
                 .findByIdAndShoppingCartId(cartItemId, cart.getId())
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -87,12 +87,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItemRepository.delete(cartItem);
     }
 
-    private ShoppingCart getOrCreateCart(User user) {
+    @Override
+    @Transactional
+    public void setNewCartForUser(User user) {
+        ShoppingCart cart = new ShoppingCart();
+        cart.setUser(user);
+        shoppingCartRepository.save(cart);
+    }
+
+    private ShoppingCart getCartOrThrow(User user) {
         return shoppingCartRepository.findByUserId(user.getId())
-                .orElseGet(() -> {
-                    ShoppingCart newCart = new ShoppingCart();
-                    newCart.setUser(user);
-                    return shoppingCartRepository.save(newCart);
-                });
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Shopping cart not found for user id: " + user.getId()));
     }
 }
