@@ -8,6 +8,7 @@ import com.example.jvbookstore.model.Role;
 import com.example.jvbookstore.model.User;
 import com.example.jvbookstore.repository.RoleRepository;
 import com.example.jvbookstore.repository.UserRepository;
+import com.example.jvbookstore.service.ShoppingCartService;
 import com.example.jvbookstore.service.UserService;
 import jakarta.transaction.Transactional;
 import java.util.Set;
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ShoppingCartService shoppingCartService;
 
     @Override
     public UserResponseDto register(UserRegistrationRequestDto request)
@@ -38,6 +40,7 @@ public class UserServiceImpl implements UserService {
         Role userRole = roleRepository.findByName(Role.RoleName.ROLE_USER);
         user.setRoles(Set.of(userRole));
         userRepository.save(user);
+        shoppingCartService.setNewCartForUser(user);
         return userMapper.toDto(user);
     }
 
