@@ -94,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = getUserOrderOrThrow(user, orderId);
         return order.getOrderItems().stream()
                 .map(orderItemMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
