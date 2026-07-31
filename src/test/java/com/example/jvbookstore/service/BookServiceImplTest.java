@@ -15,14 +15,12 @@ import com.example.jvbookstore.dto.book.CreateBookRequestDto;
 import com.example.jvbookstore.exception.EntityNotFoundException;
 import com.example.jvbookstore.mapper.BookMapper;
 import com.example.jvbookstore.model.Book;
-import com.example.jvbookstore.model.Category;
 import com.example.jvbookstore.repository.BookRepository;
 import com.example.jvbookstore.repository.CategoryRepository;
 import com.example.jvbookstore.service.impl.BookServiceImpl;
-import java.math.BigDecimal;
+import com.example.jvbookstore.util.TestUtil;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,32 +54,9 @@ class BookServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        Category category = new Category();
-        category.setId(1L);
-        category.setName("Fiction");
-
-        book = new Book();
-        book.setId(1L);
-        book.setTitle("Dune");
-        book.setAuthor("Frank Herbert");
-        book.setIsbn("978-0441172719");
-        book.setPrice(BigDecimal.valueOf(19.99));
-        book.setCategories(Set.of(category));
-
-        bookDto = new BookDto();
-        bookDto.setId(1L);
-        bookDto.setTitle("Dune");
-        bookDto.setAuthor("Frank Herbert");
-        bookDto.setIsbn("978-0441172719");
-        bookDto.setPrice(BigDecimal.valueOf(19.99));
-        bookDto.setCategoryIds(Set.of(1L));
-
-        requestDto = new CreateBookRequestDto();
-        requestDto.setTitle("Dune");
-        requestDto.setAuthor("Frank Herbert");
-        requestDto.setIsbn("978-0441172719");
-        requestDto.setPrice(BigDecimal.valueOf(19.99));
-        requestDto.setCategoryIds(Set.of(1L));
+        book = TestUtil.getBook();
+        bookDto = TestUtil.getBookDto();
+        requestDto = TestUtil.getCreateBookRequestDto();
     }
 
     @Test
@@ -195,9 +170,8 @@ class BookServiceImplTest {
     @Test
     @DisplayName("findAllByCategoryId() returns books mapped without category ids")
     void findAllByCategoryId_existingCategory_returnsBookList() {
-        BookDtoWithoutCategoryIds dto = new BookDtoWithoutCategoryIds();
-        dto.setId(1L);
-        dto.setTitle("Dune");
+        BookDtoWithoutCategoryIds dto = TestUtil.getBookDtoWithoutCategoryIds();
+
         when(bookRepository.findAllByCategoryId(1L)).thenReturn(List.of(book));
         when(bookMapper.toDtoWithoutCategories(book)).thenReturn(dto);
 
